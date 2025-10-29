@@ -42,3 +42,21 @@ main().catch((error) => {
   console.error("Fatal error in main():", error);
   process.exit(1);
 });
+
+
+// === ダミーOAuthエンドポイントの追加 ===
+import express from "express";
+
+const app = express();
+
+// ダミーの OAuth 設定を返すエンドポイント
+app.get("/.well-known/oauth", (req, res) => {
+  res.json({
+    issuer: "https://sharewis-mcp-server.onrender.com",
+    authorization_endpoint: "https://sharewis-mcp-server.onrender.com/oauth/authorize",
+    token_endpoint: "https://sharewis-mcp-server.onrender.com/oauth/token",
+    scopes_supported: ["read", "write"],
+    response_types_supported: ["code"],
+    grant_types_supported: ["authorization_code"],
+  });
+});
